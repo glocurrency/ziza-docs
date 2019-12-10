@@ -1,0 +1,135 @@
+FORMAT: 1A
+HOST: https://aziz.glocurrency.com/
+
+# Glo Currency | Aziz Project
+
+# Country [/api/countries]
+
+## Get available countries. [GET /api/countries]
+Return available countries for the current user.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer: api-token
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "count": 2,
+                "countries": [
+                    {
+                        "country_name": "Cameroon",
+                        "country_code": "CM",
+                        "status": true
+                    },
+                    {
+                        "country_name": "Gambia",
+                        "country_code": "GM",
+                        "status": true
+                    }
+                ]
+            }
+            
+            
+# Cash Collection [/api/cashCollection]
+
+## Get transaction details. [GET /api/cashCollection/getTransactionDetails]
+Get details of a single transaction.
+
++ Parameters
+    + country_code: (string, required) - Country code.
+    + collection_pin: (string, required) - Collection pin.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer: api-token
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "transaction": {
+                    "status": "HQ_OK",
+                    "collection_pin": "12345"
+                }
+            }
+            
+## Get payout transactions. [GET /api/cashCollection/getPayoutTransactions]
+Get all transactions that have been assigned for
+payout.
+
++ Parameters
+    + country_code: (string, required) - Country code.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer: api-token
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "count": 1,
+                "transactions": [
+                    {
+                        "status": "HQ_OK",
+                        "collection_pin": "12345"
+                    }
+                ]
+            }
+            
+## Accept payout transaction. [POST /api/cashCollection/acceptPayoutTransaction]
+Accept transaction so that the Bank/Agent can pay them out to beneficiaries.
+
++ Parameters
+    + country_code: (string, required) - Country code.
+    + collection_pin: (string, required) - Collection pin.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer: api-token
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "total_count": 1,
+                "success_count": 1,
+                "failed_count": 0,
+                "transactions": [
+                    {
+                        "trans_ref": "12345",
+                        "operation_result": "SUCCESS",
+                        "message": ""
+                    }
+                ]
+            }
+            
+## Process payout transaction. [POST /api/cashCollection/processPayoutTransaction]
+Inform the system that a transaction that was accepted by the Bank/
+Agent for payout has paid out and should be marked as processed with the
+details provided.
+
++ Parameters
+    + country_code: (string, required) - Country code.
+    + collection_pin: (string, required) - Collection pin.
+    + pay_method: (string, required) - How the transaction was paid out.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer: api-token
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "trans_ref": "12324",
+                "process_result": "SUCCESS",
+                "message": ""
+            }
