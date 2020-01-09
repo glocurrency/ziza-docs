@@ -1,2 +1,2 @@
-# aziz-project
-Aziz Project | GloCurrency
+# ziza-project
+Ziza Project | GloCurrency
